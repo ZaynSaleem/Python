@@ -1,0 +1,36 @@
+from captcha.image import ImageCaptcha  # pip install captcha
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image
+import random
+import os
+
+u = input("Enter your name : ")
+p = input("Enter your password : ")
+
+if u == "Admin":
+  if p == "pass123":
+    print("Successfully login")
+
+else :
+  number = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+  MAX_CAPTCHA = 6
+  WIDTH=200
+  HEIGHT=50
+
+  image = ImageCaptcha(width=WIDTH, height=HEIGHT, font_sizes=[40])
+
+  captcha_text = []
+  for i in range(MAX_CAPTCHA):
+      c = random.choice(number)
+      captcha_text.append(c)
+      #print(captcha_text)
+  captcha_text = ''.join(captcha_text)
+  print(captcha_text)
+  captcha = image.generate(captcha_text)
+  captcha_image = Image.open(captcha)
+  captcha_image = np.array(captcha_image)
+
+  image.write(captcha_text, str(i)+'_'+captcha_text + '.png') 
+  plt.imshow(captcha_image)
+  plt.show()
